@@ -1,0 +1,24 @@
+{
+  "name": "Книжная полка",
+  "short_name": "Книги",
+  "description": "Каталог книг с отзывами и списком для чтения",
+  "start_url": "/book-catalog/index.html",
+  "display": "standalone",
+  "background_color": "#f5f0eb",
+  "theme_color": "#2c1810",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "png",
+      "purpose": "any"
+    }
+  ]
+}
