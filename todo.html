@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="manifest" href="/book-catalog/manifest.json">
+    <meta name="theme-color" content="#2c1810">
+    <meta charset="UTF-8">
+    <title>📚 Хочу прочитать</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .todo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .todo-input {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(44, 24, 16, 0.1);
+            border: 1px solid #e8d5b8;
+        }
+        .todo-input input,
+        .todo-input select {
+            padding: 12px;
+            background: #faf6f0;
+            border: 1px solid #d4c5b0;
+            border-radius: 8px;
+            color: #2c1810;
+            font-size: 16px;
+            flex: 1;
+            min-width: 150px;
+            font-family: 'Georgia', serif;
+        }
+        .todo-input button {
+            background: #2c1810;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Georgia', serif;
+        }
+        .todo-input button:hover {
+            background: #4a2c1a;
+        }
+        .todo-input .delete-all-btn {
+            background: #8b0000;
+        }
+        .todo-input .delete-all-btn:hover {
+            background: #a00000;
+        }
+
+        .task-card {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 5px solid #c9a87c;
+            box-shadow: 0 2px 8px rgba(44, 24, 16, 0.08);
+            transition: 0.3s;
+        }
+        .task-card:hover {
+            box-shadow: 0 4px 15px rgba(44, 24, 16, 0.15);
+        }
+        .task-card.completed {
+            opacity: 0.5;
+            text-decoration: line-through;
+            border-left-color: #4caf50;
+            background: #f5f5f5;
+        }
+        .task-card .task-text {
+            flex: 1;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+        }
+        .task-card .task-date {
+            color: #888;
+            font-size: 14px;
+            font-family: 'Georgia', serif;
+        }
+        .task-card .priority-high { border-left-color: #8b0000; }
+        .task-card .priority-medium { border-left-color: #c9a87c; }
+        .task-card .priority-low { border-left-color: #4caf50; }
+        
+        .task-card button {
+            background: #f0ebe5;
+            border: none;
+            color: #2c1810;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        .task-card button:hover {
+            background: #d4c5b0;
+        }
+        .task-card .delete-btn {
+            background: #8b0000;
+            color: #fff;
+        }
+        .task-card .delete-btn:hover {
+            background: #a00000;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filters button {
+            background: #f0ebe5;
+            border: 1px solid #d4c5b0;
+            color: #2c1810;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Georgia', serif;
+        }
+        .filters button.active {
+            background: #2c1810;
+            color: #fff;
+            border-color: #2c1810;
+        }
+        .filters button:hover {
+            background: #d4c5b0;
+        }
+
+        .task-stats {
+            color: #6b4c3a;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background: #faf6f0;
+            border-radius: 8px;
+            border: 1px solid #e8d5b8;
+            font-family: 'Georgia', serif;
+        }
+        .sort-btn {
+            background: #f0ebe5;
+            border: 1px solid #d4c5b0;
+            color: #2c1810;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Georgia', serif;
+            margin-left: 10px;
+        }
+        .sort-btn:hover {
+            background: #d4c5b0;
+        }
+    </style>
+</head>
+<link rel="manifest" href="/book-catalog/manifest.json">
+<meta name="theme-color" content="#2c1810">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<body>
+    <header>
+        <div class="logo">📚 Книжная полка</div>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="todo.html">Хочу прочитать</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="todo-container">
+            <h1>📚 Список книг к прочтению</h1>
+
+            <!-- ФИЛЬТРЫ -->
+            <div class="filters">
+                <button class="active" data-filter="all">📖 Все</button>
+                <button data-filter="high">🔥 Срочно</button>
+                <button data-filter="medium">📚 В планах</button>
+                <button data-filter="low">💤 Отложить</button>
+                <button data-filter="completed">✅ Прочитано</button>
+                <button class="sort-btn" onclick="sortByDate()">📅 Сортировать по дате</button>
+            </div>
+
+            <!-- ФОРМА ДОБАВЛЕНИЯ -->
+            <div class="todo-input">
+                <input type="text" id="taskInput" placeholder="Название книги..." style="min-width:200px;">
+                <input type="text" id="authorInput" placeholder="Автор...">
+                <input type="date" id="dateInput">
+                <select id="priorityInput">
+                    <option value="high">🔥 Срочно</option>
+                    <option value="medium" selected>📚 В планах</option>
+                    <option value="low">💤 Отложить</option>
+                </select>
+                <button onclick="addTask()">➕ Добавить</button>
+                <button class="delete-all-btn" onclick="deleteSelected()">🗑 Удалить выбранные</button>
+            </div>
+
+            <!-- СТАТИСТИКА -->
+            <div class="task-stats" id="stats">📊 Всего: 0 | Осталось: 0 | Прочитано: 0</div>
+
+            <!-- СПИСОК ЗАДАЧ -->
+            <div id="taskList"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Книжная полка. Учебный проект</p>
+    </footer>
+    <script>
+        // РЕГИСТРАЦИЯ SERVICE WORKER
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/book-catalog/service-worker.js')
+                .then(() => console.log('✅ Service Worker зарегистрирован'))
+                .catch((err) => console.log('❌ Ошибка:', err));
+        }
+    </script>
+
+    <script src="todo.js"></script>
+
+</body>
+</html>
